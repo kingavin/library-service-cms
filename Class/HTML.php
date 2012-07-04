@@ -53,4 +53,15 @@ class Class_HTML
 			return Class_Server::getImageUrl().'/'.$url;
 		}
 	}
+	
+	static function url($action, $name = null)
+	{
+		if(is_array($action)) {
+			$action = $action['id'];
+		}
+		$urlOptions = array($action, 1);
+		
+        $router = Zend_Controller_Front::getInstance()->getRouter();
+        return $router->assemble($urlOptions, $name, false, true);
+	}
 }

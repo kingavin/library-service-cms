@@ -212,19 +212,20 @@ class Class_Layout_Front
 					$co = App_Factory::_m('Article');
 					break;
 				case 'list':
-					$tb = Class_Base::_('GroupV2');
+					$dbType = 'mongo';
+					$co = App_Factory::_m('Group_Item');
 					break;
 				case 'product':
 					$dbType = 'mongo';
 					$co = App_Factory::_m('Product');
 					break;
 				case 'product-list':
-					$tb = Class_Base::_('GroupV2');
+					$dbType = 'mongo';
+					$co = App_Factory::_m('Group_Item');
 					break;
 				case 'book':
 					$dbType = 'mongo';
 					$co = App_Factory::_m('Book');
-					break;
 					break;
 			}
 			
@@ -251,11 +252,12 @@ class Class_Layout_Front
 //					$this->_request->setParam('page', $page);
 //					$this->_resource = $tb->fetchRow($selector);
 				} else if($layoutRow->type == 'book') {
-					$bookDoc = $co->addFilter('name', $controllerName)
+					$bookDoc = $co->addFilter('alias', $controllerName)
 						->fetchOne();
 					$this->_resource = $bookDoc;
 				}
 			}
+			
 			if($this->_resource == null && $actionName == 'index') {
 				$this->_resource = 'none';
 			}

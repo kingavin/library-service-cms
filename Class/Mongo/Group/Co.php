@@ -4,42 +4,24 @@ class Class_Mongo_Group_Co extends App_Mongo_Db_Collection
 	protected $_name = 'group';
 	protected $_documentClass = 'Class_Mongo_Group_Doc';
 	
-	public function getByType($type, $returnAsOption = false)
+	static protected $_articleDoc = null;
+	static protected $_productDoc = null;
+	
+	public function findArticleGroup()
 	{
-		$groupType = null;
-		switch($type) {
-			case 'article':
-				$groupType = $type;
-				break;
-			case 'product':
-				$groupType = $type;
-				break;
-			default:
-				throw new Exception('group type "'.$type.'" not defined');
-				return null;
+		if(is_null(self::$_articleDoc)) {
+			self::$_articleDoc = $this->addFilter('type', 'article')
+				->fetchOne();
 		}
-		
-		$doc = $this->addFilter('type', $groupType)
-			->fetchOne();
-		if($returnAsOption) {
-			$arr = array();
-			foreach($doc->nodes as $node) {
-				$this->_buildArray($node, $arr, '');
-			}
-			return $arr;
-		} else {
-			return $doc;
-		}
+		return self::$_articleDoc;
 	}
 	
-	protected function _buildArray($obj, &$arr, $prefix)
+	public function findProductGroup()
 	{
-		$arr[$obj['jId']] = $prefix.$obj['label'];
-		if(isset($obj->nodes)) {
-			foreach($obj->nodes as $node) {
-				$this->_buildArray($node, $arr, $prefix.'--');
-			}
+		if(is_null(self::$_productDoc)) {
+			self::$_productDoc = $this->addFilter('type', 'product')
+				->fetchOne();
 		}
-		return ;
+		return self::$_productDoc;
 	}
 }
