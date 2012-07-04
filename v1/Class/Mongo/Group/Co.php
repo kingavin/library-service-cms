@@ -30,6 +30,7 @@ class Class_Mongo_Group_Co extends App_Mongo_Db_Collection
 			if(is_null($pDoc)) {
 				$pDoc = $this->create();
 				$pDoc->type = 'product';
+				$pDoc->groupIndex = array();
 				$pDoc->save();
 			}
 			self::$_productDoc = $pDoc;
