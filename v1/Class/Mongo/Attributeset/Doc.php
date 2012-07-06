@@ -1,6 +1,10 @@
 <?php
 class Class_Mongo_Attributeset_Doc extends App_Mongo_Db_Document
 {
+	protected $_field = array(
+		'label',
+		'type'
+	);
 	protected $_zfElements = null;
 	
 	public function loadZfElements()
