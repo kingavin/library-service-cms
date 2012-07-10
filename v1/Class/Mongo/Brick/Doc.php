@@ -11,9 +11,9 @@ class Class_Mongo_Brick_Doc extends App_Mongo_Db_Document
 		'cssSuffix',
 		'type',
 		'active',
-		'weight',
 		'params',
-		'tplName'
+		'tplName',
+		'sort'
 	);
 	
 	public function createSolidBrick(Zend_Controller_Request_Abstract $request, $globalParams = '{}')
