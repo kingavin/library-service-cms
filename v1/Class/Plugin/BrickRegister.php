@@ -39,7 +39,7 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
 							array('layoutId' => 0))
 						)
 						->addFilter('active', 1)
-						->sort('weight');
+						->sort('sort');
 	            } else {
 //	            	$selector = $brickTb->select(false)
 //						->from(array('b' => 'brick'), array('*', 'isnull' => new Zend_Db_Expr('`b`.`sort` IS NULL')))
@@ -49,7 +49,7 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
 //						->order('sort ASC');
 					$co->addFilter('layoutId', $layoutId)
 						->addFilter('active', 1)
-						->sort('weight');
+						->sort('sort');
 	            }
 //	            $brickRowset = $brickTb->fetchAll($selector);
 				$brickDocs = $co->fetchDoc();

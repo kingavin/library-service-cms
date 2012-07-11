@@ -183,7 +183,7 @@ class Class_Layout_Front
 			$this->_layoutRow = $layoutDoc;
 		}
 		if(is_null($this->_layoutRow)) {
-			throw new Exception("layout settings not found with given layoutName");
+			throw new Exception("layout settings not found with given layoutName ".$controllerName);
 		}
 		return $this->_layoutRow;
 	}
