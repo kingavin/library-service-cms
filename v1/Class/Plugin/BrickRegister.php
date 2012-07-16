@@ -22,18 +22,6 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
 	            $brickTb = Class_Base::_tb('Brick');
 	            $co =App_Factory::_m('Brick');
 	            if($layoutFront->isDisplayHead() == 1) {
-//					$selector = $brickTb->select(false)
-//						->from(array('b' => 'brick'), array('*', 'isnull' => new Zend_Db_Expr('`b`.`sort` IS NULL')))
-//						->where('layoutId = ? or layoutId = 0', $layoutId)
-//						->where('active = ?', 1)
-//						->order('isnull ASC')
-//						->order('sort ASC');
-//					$docs = $co->fetchTest();
-//					
-//					foreach($docs as $d) {
-//						Zend_Debug::dump($d);
-//					}
-					
 					$co->addFilter('$or', array(
 							array('layoutId' => $layoutId),
 							array('layoutId' => 0))
@@ -41,17 +29,10 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
 						->addFilter('active', 1)
 						->sort('sort');
 	            } else {
-//	            	$selector = $brickTb->select(false)
-//						->from(array('b' => 'brick'), array('*', 'isnull' => new Zend_Db_Expr('`b`.`sort` IS NULL')))
-//						->where('layoutId = ?', $layoutId)
-//						->where('active = ?', 1)
-//						->order('isnull ASC')
-//						->order('sort ASC');
 					$co->addFilter('layoutId', $layoutId)
 						->addFilter('active', 1)
 						->sort('sort');
 	            }
-//	            $brickRowset = $brickTb->fetchAll($selector);
 				$brickDocs = $co->fetchDoc();
 				
 	            $cbc = Class_Brick_Controller::getInstance();

@@ -8,6 +8,8 @@ abstract class Class_Brick_Solid_Abstract implements Class_Brick_Interface
     protected $_disableRender = false;
     protected $_gearLinks = array();
     
+    protected $_effectFiles = null;
+    
     protected $_useTwig = false;
     
     public function __construct($brick, Zend_Controller_Request_Abstract $request)
@@ -44,6 +46,11 @@ abstract class Class_Brick_Solid_Abstract implements Class_Brick_Interface
     public function getSpriteName()
     {
     	return $this->_brick->spriteName;
+    }
+    
+    public function getEffectFiles()
+    {
+    	return $this->_effectFiles;
     }
     
 	public function getParam($key, $defaultValue = NULL)

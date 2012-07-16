@@ -54,6 +54,13 @@ class Class_Brick_Controller
     {
         $solidBrick = $brick->createSolidBrick($request);
 		$this->_solidBrickList[] = $solidBrick;
+		
+		$effectFiles = $solidBrick->getEffectFiles();
+		if(!is_null($effectFiles)) {
+			foreach($effectFiles as $filename) {
+				$this->_jsList[] = $filename;
+			}
+		}
         return true;
     }
     
@@ -76,6 +83,13 @@ class Class_Brick_Controller
     public function getJsList()
     {
         return $this->_jsList;
+    }
+    
+    public function getJsPath()
+    {
+    	$jsList = array_unique($this->_jsList);
+    	$jsPath = implode(',', $jsList);
+    	return $jsPath;
     }
     
     public function getCssList()
