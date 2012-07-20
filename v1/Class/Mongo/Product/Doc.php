@@ -1,5 +1,5 @@
 <?php
-class Class_Mongo_Product_Doc extends App_Mongo_Db_Document
+class Class_Mongo_Product_Doc extends App_Mongo_Entity_Doc
 {
 	protected $_field = array(
 		'attributesetId',

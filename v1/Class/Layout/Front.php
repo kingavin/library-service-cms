@@ -199,13 +199,14 @@ class Class_Layout_Front
 			if(is_null($layoutRow)) {
 				return null;
 			}
-			if($layoutRow->type == 'frontpage') {
+			
+			if($layoutRow->type == 'frontpage' || $layoutRow->type == 'index') {
 				$this->_resource = 'none';
 				return $this->_resource;
 			}
 			
 			$id = $actionName;
-			$dbType = 'mysql';
+			$dbType = 'mongo';
 			switch($layoutRow->type) {
 				case 'article':
 					$dbType = 'mongo';
