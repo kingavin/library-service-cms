@@ -127,17 +127,17 @@ class Class_Server
 	
 	public static function name($type = null)
 	{
-		$config = self::getConfig();
+//		$config = self::getConfig();
 		$name = null;
 		switch($type) {
 			case 'ext':
-				$name = $config->ext->name;
+				$name = 'lib.enorange.test';
 				break;
 			case 'lib':
-				$name = $config->lib->name;
+				$name = 'lib.enorange.com';
 				break;
 			case 'misc':
-				$name = $config->misc->name;
+				$name = 'misc.enorange.com';
 				break;
 			default:
 				throw new Exception('server type '.$type.' is not defined');
