@@ -19,7 +19,6 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
             	$layoutRow = $layoutFront->getLayoutRow();
 				
                 $layoutId = $layoutRow->getId();
-	            $brickTb = Class_Base::_tb('Brick');
 	            $co =App_Factory::_m('Brick');
 	            if($layoutFront->isDisplayHead() == 1) {
 					$co->addFilter('$or', array(
