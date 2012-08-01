@@ -139,7 +139,7 @@ class Class_Link
     
 	public function sortChildren()
     {
-        $this->_bubbleSort(&$this->_children);
+        $this->_bubbleSort($this->_children);
         return $this;
     }
     
