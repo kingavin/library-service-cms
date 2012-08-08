@@ -281,4 +281,16 @@ class Class_Layout_Front
 		}
 		return 1;
 	}
+	
+	public function hideHead()
+	{
+		$layoutRow = $this->getLayoutRow();
+		return $layoutRow->hideHead;
+	}
+	
+	public function hideTail()
+	{
+		$layoutRow = $this->getLayoutRow();
+		return $layoutRow->hideTail;
+	}
 }

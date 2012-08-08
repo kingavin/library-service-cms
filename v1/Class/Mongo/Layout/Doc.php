@@ -8,6 +8,7 @@ class Class_Mongo_Layout_Doc extends App_Mongo_Db_Document
 		'actionName',
 		'default',
 		'type',
-		'displayHead'
+		'hideHead',
+		'hideTail'
 	);
 }
