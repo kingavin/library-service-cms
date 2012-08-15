@@ -58,7 +58,12 @@ class Class_Brick_Controller
 		$effectFiles = $solidBrick->getEffectFiles();
 		if(!is_null($effectFiles)) {
 			foreach($effectFiles as $filename) {
-				$this->_jsList[] = $filename;
+				$ext = pathinfo($filename, PATHINFO_EXTENSION);
+				if($ext == 'js') {
+					$this->_jsList[] = $filename;
+				} else {
+					$this->_cssList[] = $filename;
+				}
 			}
 		}
         return true;
@@ -95,6 +100,13 @@ class Class_Brick_Controller
     public function getCssList()
     {
         return $this->_cssList;
+    }
+    
+    public function getCssPath()
+    {
+    	$cssList = array_unique($this->_cssList);
+    	$cssPath = implode(',', $cssList);
+    	return $cssPath;
     }
     
     public function renderBrick($brickId)
