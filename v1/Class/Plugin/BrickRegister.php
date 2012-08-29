@@ -7,8 +7,24 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
     {
 		$bricks = $request->getParam('bricks');
 		
+		$type = $request->getModuleName();
+		
+		switch($type) {
+			case 'user':
+				$locale = Zend_Registry::get('Locale');
+				$translate = new Zend_Translate(
+					array('adapter' => 'gettext', 'content' => CONTAINER_PATH.'/languages/user/zh_CN.mo', 'locale' => 'zh_CN')
+				);
+				$translate->addTranslation(
+					array('content' => CONTAINER_PATH.'/languages/user/en_US.mo', 'locale' => 'en_US')
+				);
+				$translate->setLocale($locale);
+				Zend_Registry::set('Zend_Translate', $translate);
+			break;
+		}
+		
+		
 		if($this->_registed != true && $bricks != 'disabled') {
-            $type = $request->getModuleName();
             $controllerName = $this->getRequest()->getControllerName();
 			$actionName = $this->getRequest()->getActionName();
 				

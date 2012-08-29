@@ -12,7 +12,7 @@ class Class_Server
 	protected static $_libVersion = 'v1';
 	protected static $_siteFolder = null;
 	
-	public static function config($env, $libVersion, $siteId, $orgCode, $siteFolder = null)
+	public static function config($env, $libVersion, $siteId, $orgCode, $siteFolder)
 	{
 		self::$_enviroment = $env;
 		self::$_libVersion = $libVersion;
@@ -34,7 +34,7 @@ class Class_Server
 	public static function getImageFolderUrl()
 	{
 		$url = self::getImageUrl();
-		$url.= '/'.self::$_orgCode;
+		$url.= '/'.self::$_siteFolder;
 		return $url;
 	}
 	
@@ -46,6 +46,13 @@ class Class_Server
 	public static function setSiteId($id)
 	{
 		self::$_siteId = $id;
+	}
+	
+	public static function getSiteFolderPath()
+	{
+		$url = self::getImageUrl();
+		$url.= '/'.self::$_siteFolder;
+		return $url;
 	}
 	
 	public static function getSiteId()

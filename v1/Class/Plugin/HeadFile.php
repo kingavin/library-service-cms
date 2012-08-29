@@ -7,7 +7,7 @@ class Class_Plugin_HeadFile extends Zend_Controller_Plugin_Abstract
 			$view = new Zend_View();
 			$csa = Class_Session_Admin::getInstance();
 			
-			$fileUrl = Class_Server::fileUrl();
+			$fileUrl = Class_Server::getSiteFolderPath();
 			if($csa->getSessionData('localCssMode') == 'active') {
 				$fileUrl = 'http://local.host/'.Class_Server::getOrgCode();
 			}
