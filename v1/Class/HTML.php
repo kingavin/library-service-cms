@@ -50,7 +50,8 @@ class Class_HTML
 		if(isset($urlArr['host'])) {
 			return $url;
 		} else {
-			return Class_Server::getImageFolderUrl().'/'.$url;
+			$siteFolder = Class_Server::getSiteFolder();
+			return Class_Server::getImageUrl().'/'.$siteFolder.'/'.$url;
 		}
 	}
 	

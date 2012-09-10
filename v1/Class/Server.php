@@ -33,6 +33,7 @@ class Class_Server
 	
 	public static function getImageFolderUrl()
 	{
+		die('get-image-folder-url function removed! user getImageUrl instead!!');
 		$url = self::getImageUrl();
 		$url.= '/'.self::$_siteFolder;
 		return $url;
