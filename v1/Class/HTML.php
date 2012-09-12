@@ -58,7 +58,11 @@ class Class_HTML
 	static function url($action, $name = null)
 	{
 		if(is_array($action)) {
-			$action = $action['id'];
+			if(isset($action['alias']) && !empty($action['alias'])) {
+				$action = $action['alias'];
+			} else {
+				$action = $action['id'];
+			}
 		}
 		$urlOptions = array($action, 1);
 		
