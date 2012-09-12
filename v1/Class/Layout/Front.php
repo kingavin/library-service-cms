@@ -234,10 +234,9 @@ class Class_Layout_Front
 				if($dbType == 'mysql') {
 					$this->_resource = $tb->find($id)->current();
 				} else if($dbType == 'mongo') {
-					
 					$co->addFilter('$or', array(
 						array('_id' => new MongoId($id)),
-						array('link' => $id)
+						array('alias' => $id)
 					));
 					$this->_resource = $co->fetchOne();
 				}
