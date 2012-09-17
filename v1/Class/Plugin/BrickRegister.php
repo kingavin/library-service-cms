@@ -6,10 +6,21 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
     public function preDispatch(Zend_Controller_Request_Abstract $request)
     {
 		$bricks = $request->getParam('bricks');
-		
 		$type = $request->getModuleName();
 		
 		switch($type) {
+			case 'default':
+			case "":
+				$locale = Zend_Registry::get('Locale');
+				$translate = new Zend_Translate(
+					array('adapter' => 'gettext', 'content' => CONTAINER_PATH.'/languages/default/zh_CN.mo', 'locale' => 'zh_CN')
+				);
+				$translate->addTranslation(
+					array('content' => CONTAINER_PATH.'/languages/default/en_US.mo', 'locale' => 'en_US')
+				);
+				$translate->setLocale($locale);
+				Zend_Registry::set('Zend_Translate', $translate);
+				break;
 			case 'user':
 				$locale = Zend_Registry::get('Locale');
 				$translate = new Zend_Translate(
@@ -20,7 +31,7 @@ class Class_Plugin_BrickRegister extends Zend_Controller_Plugin_Abstract
 				);
 				$translate->setLocale($locale);
 				Zend_Registry::set('Zend_Translate', $translate);
-			break;
+				break;
 		}
 		
 		
