@@ -5,6 +5,8 @@ class Class_Mongo_Info_Doc extends App_Mongo_Db_Document
 		'language',
 		'pageTitle',
 		'metakey',
-		'metadesc'
+		'metadesc',
+		'thumbWidth',
+		'thumbHeight'
 	);
 }
