@@ -1,8 +1,6 @@
 <?php
 class Class_HTML
 {
-	protected static $_siteInfo = null;
-	
 	static function graphic($fileName, $nameSuffix = null)
     {
         if(is_null($nameSuffix)) {
@@ -42,10 +40,6 @@ class Class_HTML
 	
 	static function outputImage($url, $type = 'main')
 	{
-		if(is_null(self::$_siteInfo)) {
-			self::$_siteInfo = Zend_Registry::get('siteInfo');
-		}
-		
 		$urlArr = parse_url($url);
 		if(isset($urlArr['host'])) {
 			return $url;
