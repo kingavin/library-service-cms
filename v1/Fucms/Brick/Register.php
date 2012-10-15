@@ -1,0 +1,207 @@
+<?php
+namespace Fucms\Brick;
+
+class Register
+{
+    protected $_solidBrickList = array();
+    protected $_brickNameList = array();
+    protected $_extensionParams = array();
+    protected $_jsList = array();
+    protected $_cssList = array();
+    protected $_cache = null;
+    
+    protected $_routeMatch = null;
+    
+    public function __construct($rm, $config = null)
+    {
+    	$this->_routeMatch = $rm;
+    	
+    	if($config) {
+    		$config->configRegister($this);
+    	}
+    	
+    	$frontendOptions = array(
+	       'lifetime' => 7200
+	    );
+	    $backendOptions = array(
+	        //'cache_dir' => CACHE_PATH
+	    );
+	    //$this->_cache = Zend_Cache::factory('Core', 'File', $frontendOptions, $backendOptions);
+    }
+    
+	public function registerBrick($brickDoc)
+    {
+        $solidBrick = $brickDoc->createSolidBrick($this->_routeMatch);
+		$this->_solidBrickList[] = $solidBrick;
+		
+		$effectFiles = $solidBrick->getEffectFiles();
+		if(!is_null($effectFiles)) {
+			foreach($effectFiles as $filename) {
+				$ext = pathinfo($filename, PATHINFO_EXTENSION);
+				if($ext == 'js') {
+					$this->_jsList[] = $filename;
+				} else {
+					$this->_cssList[] = $filename;
+				}
+			}
+		}
+        return true;
+    }
+    /*
+    public function createSolidBrick($brick, Zend_Controller_Request_Abstract $request)
+    {
+    	if($brick instanceof Class_Model_Brick_Row) {
+    		
+    	} else if(is_string($brick)) {
+    		$co = App_Factory::_m('Brick');
+			$brickRow = $co->create();
+			$brickRow->setFromArray(array('extName' => $brick));
+			$solidBrick = $brickRow->createSolidBrick($request);
+		    return $solidBrick;
+    	}
+    }
+    */
+    public function getBrickList($spriteName = null)
+    {
+    	if(is_null($spriteName)) {
+        	return $this->_solidBrickList;
+    	} else {
+    		$solidBrickList = $this->_solidBrickList;
+	    	$returnBricks = array();
+			foreach($solidBrickList as $solidBrick) {
+				if($solidBrick->getSpriteName() == $spriteName) {
+					$returnBricks[] = $solidBrick;
+				}
+			}
+			return $returnBricks;
+    	}
+    }
+    
+    public function getJsList()
+    {
+        return $this->_jsList;
+    }
+    
+    public function getJsPath()
+    {
+    	$jsList = array_unique($this->_jsList);
+    	$jsPath = implode(',', $jsList);
+    	return $jsPath;
+    }
+    
+    public function getCssList()
+    {
+        return $this->_cssList;
+    }
+    
+    public function getCssPath()
+    {
+    	$cssList = array_unique($this->_cssList);
+    	$cssPath = implode(',', $cssList);
+    	return $cssPath;
+    }
+    /*
+    public function renderBrick($brickId)
+    {
+    	$solidBrickList = $this->_solidBrickList;
+    	
+    	$brickHTML = "没有找到对应brick-id:".$brickId."的内容";
+    	foreach($solidBrickList as $solidBrick) {
+    		if($solidBrick->getBrickId() == $brickId) {
+    			$brickHTML = $solidBrick->render();
+    			break;
+    		}
+    	}
+    	return $brickHTML;
+    }
+    
+	public function render($position)
+	{
+	    if(!is_null($position)) {
+	        if(array_key_exists($position, $this->_solidBrickList)) {
+    	        $solidBrickList = $this->_solidBrickList[$position];
+    	        $HTML = "";
+    	        foreach($solidBrickList as $solidBrick) {
+    	            $HTML.= $solidBrick->render();
+    	        }
+    	        return $HTML;
+	        }
+	    } else {
+	        throw new Class_Brick_Exception('position required for brick rendering');
+	    }
+	}
+	*/
+	public function renderAll()
+	{
+		$solidBrickList = $this->_solidBrickList;
+		
+		$HTML_ARR = array();
+		foreach($solidBrickList as $solidBrick) {
+			if(array_key_exists($solidBrick->getSpriteName(), $HTML_ARR)) {
+				$BrickHTML = $HTML_ARR[$solidBrick->getSpriteName()];
+			} else {
+				$BrickHTML = "";
+			}
+			/**
+			 * @todo redesign the cache mech
+			 */
+//			if($solidBrick->getCacheId() !== null && !Class_Session_Admin::isLogin()) {
+//				$cacheId = $solidBrick->getCacheId();
+//				if(!$this->_cache->test($cacheId)) {
+//					$BrickHTML.= $solidBrick->render();
+//					$this->_cache->save($BrickHTML, $cacheId, array('brick'));
+//				} else {
+//					$BrickHTML.= $this->_cache->load($cacheId);
+//				}
+//			} else {
+				$BrickHTML.= $solidBrick->render();
+//			}
+			$HTML_ARR[$solidBrick->getSpriteName()] = $BrickHTML;
+		}
+		return $HTML_ARR;
+	}
+
+	/*
+	public function renderPosition()
+	{
+		$tb = new Zend_Db_Table('layout_stage');
+		$spriteRowset = $tb->fetchAll($tb->select()->where('layoutId = 1')->order('sort ASC'));
+		$HTML_ARR = array();
+		
+		foreach($spriteRowset as $row) {
+			$HTML = "";
+			$spriteName = $row->spriteName;
+			if(array_key_exists($spriteName, $this->_solidBrickList)) {
+				$HTML.= $this->_render($spriteName);
+			}
+			$HTML_ARR[$spriteName] = $HTML;
+		}
+		return $HTML_ARR;
+	}
+	
+	protected function _render($spriteName)
+	{
+		if(is_null($spriteName)) {
+			throw new Class_Brick_Exception('position required for brick rendering');
+		}
+		$solidBrickList = $this->_solidBrickList[$spriteName];
+		$HTML = "";
+		foreach($solidBrickList as $solidBrick) {
+			$BrickHTML = "";
+			if($solidBrick->getCacheId() !== null && !Class_Session_Admin::isLogin()) {
+				$cacheId = $solidBrick->getCacheId();
+				if(!$this->_cache->test($cacheId)) {
+					$BrickHTML = $solidBrick->render();
+					$this->_cache->save($BrickHTML, $cacheId, array('brick'));
+				} else {
+					$BrickHTML = $this->_cache->load($cacheId);
+				}
+			} else {
+				$BrickHTML = $solidBrick->render();
+			}
+			$HTML.= $BrickHTML;
+		}
+		return $HTML;
+	}
+	*/
+}

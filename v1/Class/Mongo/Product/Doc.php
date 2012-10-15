@@ -10,6 +10,8 @@ class Class_Mongo_Product_Doc extends App_Mongo_Entity_Doc
 		'label',
 		'name',
 		'sku',
+		'meatakey',
+		'metadesc',
 		'origPrice',
 		'price',
 		'showWhere',
