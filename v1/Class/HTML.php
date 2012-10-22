@@ -49,6 +49,27 @@ class Class_HTML
 		}
 	}
 	
+	static function graphicDataJson($attachments)
+	{
+		if(is_array($attachments)) {
+			$dataArr = array();
+			foreach($attachments as $attr) {
+				if($attr['filetype'] == 'graphic') {
+					$dataArr[] = '"'.$attr['urlname'].'"';
+				}
+			}
+			if(count($dataArr) == 0) {
+				return "";
+			}
+			$dataStr = '"items": [';
+			$dataStr .= implode(',', $dataArr);
+			$dataStr .= ']';
+			return $dataStr;
+		} else {
+			return "";
+		}
+	}
+	
 	static function url($action, $name = null)
 	{
 		if(is_array($action)) {

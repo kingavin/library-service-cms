@@ -34,6 +34,7 @@ class Class_Brick_Solid_TwigView implements Zend_View_Interface
     {
         $this->_twig = new Twig_Environment(null, $envOptions);
         $this->_twig->addFilter('outputImage', new Twig_Filter_Function('Class_HTML::outputImage'));
+        $this->_twig->addFilter('graphicDataJson', new Twig_Filter_Function('Class_HTML::graphicDataJson'));
         $this->_twig->addFilter('substr', new Twig_Filter_Function('Class_HTML::substr'));
         $this->_twig->addFilter('url', new Twig_Filter_Function('Class_HTML::url'));
         if (null !== $templatePath) {
