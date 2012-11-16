@@ -136,6 +136,7 @@ class Class_Layout_Front
 //					$selector = $layoutTable->select()->where('controllerName = ?', $this->getCurrentControllerName())
 //						->where('moduleName = ?', 'default');
 					$layoutDoc = $layoutCo->addFilter('controllerName', $this->getCurrentControllerName())
+						->addFilter('moduleName', 'default')
 						->fetchOne();
 						
 					if(is_null($layoutDoc) && in_array($controllerName, array('index','article','list','product','product-list'))) {
@@ -269,6 +270,19 @@ class Class_Layout_Front
 		}
 		
 		return $this->_resource;
+	}
+	
+	public function getResourceAlias()
+	{
+		$r = $this->getResource();
+		if($r == 'none' || $r == 'not-found') {
+			return null;
+		} else {
+			if(!empty($r->alias)) {
+				return $r->alias;
+			}
+		}
+		return null;
 	}
 	
 	public function getType()
