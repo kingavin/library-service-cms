@@ -136,7 +136,7 @@ class Class_Layout_Front
 //					$selector = $layoutTable->select()->where('controllerName = ?', $this->getCurrentControllerName())
 //						->where('moduleName = ?', 'default');
 					$layoutDoc = $layoutCo->addFilter('controllerName', $this->getCurrentControllerName())
-						->addFilter('moduleName', 'default')
+						//->addFilter('moduleName', 'default')
 						->fetchOne();
 						
 					if(is_null($layoutDoc) && in_array($controllerName, array('index','article','list','product','product-list'))) {
