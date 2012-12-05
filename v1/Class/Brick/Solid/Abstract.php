@@ -90,9 +90,7 @@ abstract class Class_Brick_Solid_Abstract implements Class_Brick_Interface
     
     public function path()
     {
-    	echo $this->_brick->extName.'<br />';
         $path = str_replace('_', '/', $this->_brick->extName);
-        echo $path.'<br />';
         return '/brick/'.$path;
     }
     
