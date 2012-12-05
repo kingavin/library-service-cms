@@ -23,7 +23,11 @@ class Class_Plugin_HeadFile extends Zend_Controller_Plugin_Abstract
 						$view->headScript()->appendFile(Class_Server::extUrl().'/'.$doc->filename);
 					}
 				} else if($doc->folder == 'helper') {
-					$view->headScript()->appendFile(Class_Server::libUrl().'/front/script/helper/'.$doc->filename);
+					if($doc->type == 'css') {
+						$view->headLink()->appendStylesheet(Class_Server::libUrl().'/front/script/helper/'.$doc->filename);
+					} else {
+						$view->headScript()->appendFile(Class_Server::libUrl().'/front/script/helper/'.$doc->filename);
+					}
 				} else {
 					if($doc->type == 'css') {
 						$view->headLink()->appendStylesheet($fileUrl.'/'.$doc->filename);
