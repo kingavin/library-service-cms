@@ -28,7 +28,7 @@ class Class_Server
 	
 	public static function getImageUrl()
 	{
-		return 'http://storage.aliyun.com/public-misc';
+		return 'http://misc.fucms.com/public-misc';
 	}
 	
 	public static function getImageFolderUrl()
@@ -110,7 +110,7 @@ class Class_Server
 	
 	public static function fileUrl()
 	{
-		return 'http://storage.aliyun.com/public-misc/'.self::$_orgCode;
+		return 'http://misc.fucms.com/public-misc/'.self::$_orgCode;
 	}
 	
 	public static function getFileServer()
